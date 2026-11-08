@@ -1,78 +1,39 @@
 # GameOS
 
-A tiny gaming operating system for the ESP32.  Simple circuit, two games
-(Snake and Atari Breakout) with procedurally generated levels, and
-automatic "remote mode" so you can play on your computer when the OLED/joystick aren't wired.
+Two tiny gaming OS implementations for microcontrollers:
 
-## Hardware
+| Platform | Directory | Build system | Client |
+|----------|-----------|--------------|--------|
+| ESP32    | `ESP32/`  | PlatformIO / Arduino | `client/gameos_client.py` |
+| RP2040   | `RP2040/` | CMake + Pico SDK | `RP2040/host/framebuffer_viewer/viewer.py` |
 
-```
-ESP32  +  SSD1306 OLED (I2C)  +  joystick (VRX/VRY/SW)
-```
+Both run game logic on the microcontroller. Wire up an OLED and buttons and it
+runs standalone. No hardware? It streams the screen to your PC over USB and
+your keyboard controls it.
 
-Full wiring: see `circuit.md`.
+## Quick start
 
-## How it works
-
-1. On boot, GameOS probes I2C for an SSD1306 OLED.
-2. **OLED found** → hardware mode: game renders on the OLED, controlled by
-   the hardware joystick.
-3. **No OLED** → remote mode: the ESP32 still runs the game, but streams
-   the 128x64 screen over USB-serial to a PC client.  The PC renders it in
-   a window and relays keyboard (arrows + space/enter) back to the ESP32
-   as joystick input.  The game logic always runs on the ESP32.
-
-## Flashing (Arduino IDE)
-
-1. Install the ESP32 board package (File → Preferences → Additional Boards
-   Manager URLs: `https://espressif.github.io/arduino-esp32/package_esp32_index.json`).
-2. Open `GameOS/GameOS.ino` in the Arduino IDE.
-3. Tools → Board → ESP32 Arduino → ESP32 Dev Module.
-4. Tools → Upload Speed → 921600 (match the client baud).
-5. Select your ESP32 serial port and click Upload.
-
-No extra libraries are required — the SSD1306 driver is self-contained
-(raw I2C).
-
-## Remote play (no OLED/joystick)
-
-Just plug the ESP32 into your computer via USB and run:
-
+**ESP32:**
 ```bash
-cd client
-pip install -r requirements.txt
-python gameos_client.py
+cd ESP32
+./flash.sh    # compile + upload
+./play.sh     # launch the PC viewer
 ```
 
-The client auto-detects the ESP32 serial port, or you can pass it manually:
-
+**RP2040:**
 ```bash
-python gameos_client.py --port /dev/ttyUSB0   # Linux
-python gameos_client.py --port COM3           # Windows
-python gameos_client.py --port /dev/cu.usbmodem...  # macOS
+cd RP2040
+cmake -B build && cmake --build build -j
+./tools/play.sh   # launch viewer
 ```
 
-Controls (PC client):
-- Arrow keys  → move snake
-- Space / Enter → button (menu select / play)
-
-## Project layout
+## Layout
 
 ```
-GameOS/          Arduino sketch (ESP32 firmware)
-  GameOS.ino     entry point + hardware auto-detect
-  config.h       pins, baud, modes, timing
-  Display.*      screen buffer + OLED + serial display drivers
-  Input.*        HW joystick + serial joystick drivers
-  GameOS.*       OS core: boot/menu/game/game-over state machine
-  Snake.*        Snake game
-  Breakout.*     Atari Breakout game (procedural levels)
-  font5x7.*      tiny 5x7 bitmap font
-client/          PC client (Python + pygame)
-  gameos_client.py renders ESP32 screen, relays keyboard
-circuit.md       wiring instructions
+GameOS/
+├── client/          PC client (pygame) for ESP32 remote mode
+├── ESP32/           ESP32 firmware (Arduino sketch)
+└── RP2040/          RP2040 firmware (C, Pico SDK)
 ```
-
-## License
 
 MIT — hack, remix, build more games on top of it.
