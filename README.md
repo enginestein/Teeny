@@ -1,4 +1,4 @@
-# GameOS
+# GameOS 
 
 Two tiny gaming OS implementations for microcontrollers:
 
