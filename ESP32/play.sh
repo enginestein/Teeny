@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# play.sh -- launch the GameOS PC viewer for the ESP32 version.
+# play.sh -- launch the Teeny PC viewer for the ESP32 version.
 #
 #   ./play.sh                 auto-detect ESP32 serial port and open viewer
 #   ./play.sh /dev/ttyUSB0    use a specific serial port
@@ -27,7 +27,7 @@ fi
 
 PORT="${1:-}"
 if [[ -n "${PORT}" ]]; then
-  exec python3 ../client/gameos_client.py --port "${PORT}"
+  exec python3 ../client/teeny_client.py --port "${PORT}"
 else
-  exec python3 ../client/gameos_client.py
+  exec python3 ../client/teeny_client.py
 fi

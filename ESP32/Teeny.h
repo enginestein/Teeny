@@ -1,12 +1,12 @@
-#ifndef GAMEOS_H
-#define GAMEOS_H
+#ifndef TEENY_H
+#define TEENY_H
 
 #include <Arduino.h>
 #include "Display.h"
 #include "Input.h"
 
 // ---------------------------------------------------------------------------
-// Game interface.  Every GameOS game derives from this.
+// Game interface.  Every Teeny game derives from this.
 // ---------------------------------------------------------------------------
 class Game {
 public:
@@ -21,18 +21,18 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-// GameOS core: boot screen -> menu -> game -> game-over state machine.
+// Teeny core: boot screen -> menu -> game -> game-over state machine.
 // ---------------------------------------------------------------------------
-#define GAMEOS_MAX_GAMES 4
+#define TEENY_MAX_GAMES 4
 
 #define STATE_BOOT     0
 #define STATE_MENU     1
 #define STATE_GAME     2
 #define STATE_GAMEOVER 3
 
-class GameOS {
+class Teeny {
 public:
-    GameOS(Display *disp, Input *input, int8_t mode);
+    Teeny(Display *disp, Input *input, int8_t mode);
     void begin();
     void addGame(Game *g);
     void update();
@@ -42,7 +42,7 @@ private:
     Display  *_disp;
     Input    *_input;
     int8_t    _mode;
-    Game     *_games[GAMEOS_MAX_GAMES];
+    Game     *_games[TEENY_MAX_GAMES];
     uint8_t   _numGames;
     uint8_t   _state;
     uint8_t   _menuSel;

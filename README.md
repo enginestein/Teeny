@@ -1,10 +1,10 @@
-# GameOS 
+# Teeny 
 
 Two tiny gaming OS implementations for microcontrollers:
 
 | Platform | Directory | Build system | Client |
 |----------|-----------|--------------|--------|
-| ESP32    | `ESP32/`  | PlatformIO / Arduino | `client/gameos_client.py` |
+| ESP32    | `ESP32/`  | PlatformIO / Arduino | `client/teeny_client.py` |
 | RP2040   | `RP2040/` | CMake + Pico SDK | `RP2040/host/framebuffer_viewer/viewer.py` |
 
 Both run game logic on the microcontroller. Wire up an OLED and buttons and it
@@ -30,7 +30,7 @@ cmake -B build && cmake --build build -j
 ## Layout
 
 ```
-GameOS/
+Teeny/
 ├── client/          PC client (pygame) for ESP32 remote mode
 ├── ESP32/           ESP32 firmware (Arduino sketch)
 └── RP2040/          RP2040 firmware (C, Pico SDK)

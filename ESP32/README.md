@@ -1,4 +1,4 @@
-# GameOS (ESP32)
+# Teeny (ESP32)
 
 Tiny game console on an ESP32. Snake and Atari Breakout. Wire up an OLED and
 joystick and it runs on the board. Don't wire anything? It streams the screen
@@ -27,7 +27,7 @@ pip install platformio
 ./flash.sh /dev/ttyUSB0   # specific serial port
 ```
 
-Or open `GameOS.ino` in the Arduino IDE and upload.
+Or open `Teeny.ino` in the Arduino IDE and upload.
 
 ## Play on your PC (no OLED/joystick)
 

@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 // ============================================================================
-// GameOS - Configuration
+// Teeny - Configuration
 // ============================================================================
 
 // ---------- Hardware pins (ESP32) ----------
@@ -20,7 +20,7 @@
 #define SCREEN_H    64   // SSD1306 height
 
 // ---------- Serial link (remote mode) ----------
-// When no OLED/joystick is present GameOS streams the framebuffer over
+// When no OLED/joystick is present Teeny streams the framebuffer over
 // USB-serial to a PC client that renders it and sends back joystick input.
 #define SERIAL_BAUD  921600  // fast serial link for screen streaming
 

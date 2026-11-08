@@ -1,10 +1,10 @@
-#include "GameOS.h"
+#include "Teeny.h"
 #include "config.h"
 
 // ---------------------------------------------------------------------------
-// GameOS
+// Teeny
 // ---------------------------------------------------------------------------
-GameOS::GameOS(Display *disp, Input *input, int8_t mode) {
+Teeny::Teeny(Display *disp, Input *input, int8_t mode) {
     _disp = disp;
     _input = input;
     _mode = mode;
@@ -16,19 +16,19 @@ GameOS::GameOS(Display *disp, Input *input, int8_t mode) {
     _lastSig = 0;
 }
 
-void GameOS::begin() {
+void Teeny::begin() {
     _bootTime = millis();
     _disp->clear();
     _disp->display();
 }
 
-void GameOS::addGame(Game *g) {
-    if (_numGames < GAMEOS_MAX_GAMES) {
+void Teeny::addGame(Game *g) {
+    if (_numGames < TEENY_MAX_GAMES) {
         _games[_numGames++] = g;
     }
 }
 
-uint32_t GameOS::_signature() {
+uint32_t Teeny::_signature() {
     uint32_t sig = ((uint32_t)_state << 24) | ((uint32_t)_menuSel << 16);
     if (_curGame) {
         sig |= _curGame->frameId();
@@ -37,7 +37,7 @@ uint32_t GameOS::_signature() {
     return sig;
 }
 
-void GameOS::update() {
+void Teeny::update() {
     uint32_t now = millis();
 
     switch (_state) {
@@ -80,7 +80,7 @@ void GameOS::update() {
     }
 }
 
-void GameOS::draw() {
+void Teeny::draw() {
     uint32_t sig = _signature();
     if (sig == _lastSig) return;     // nothing changed -> skip redraw
     _lastSig = sig;
@@ -95,7 +95,7 @@ void GameOS::draw() {
     }
 }
 
-void GameOS::drawBoot() {
+void Teeny::drawBoot() {
     _disp->drawText(43, 26, "GAME OS", true);
     _disp->drawText(38, 42, "BOOTING...", true);
     if (_mode == MODE_REMOTE) {
@@ -105,7 +105,7 @@ void GameOS::drawBoot() {
     }
 }
 
-void GameOS::drawMenu() {
+void Teeny::drawMenu() {
     _disp->drawText(43, 2, "GAME OS", true);
 
     for (uint8_t i = 0; i < _numGames; i++) {
@@ -121,7 +121,7 @@ void GameOS::drawMenu() {
     _disp->drawText(2, 58, "JOY=SELECT  BTN=PLAY", true);
 }
 
-void GameOS::drawGameOver() {
+void Teeny::drawGameOver() {
     _disp->drawText(34, 20, "GAME OVER", true);
     char buf[32];
     snprintf(buf, sizeof(buf), "SCORE: %u", _curGame ? _curGame->score() : 0);

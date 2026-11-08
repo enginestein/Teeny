@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-GameOS PC Client
+Teeny PC Client
 
-Renders the GameOS screen streamed from the ESP32 over USB-serial and
+Renders the Teeny screen streamed from the ESP32 over USB-serial and
 relays keyboard input back to the ESP32 as joystick commands.
 
 The game logic always runs on the ESP32; this client is just a display +
@@ -10,10 +10,10 @@ input terminal so you can play on your computer when no OLED/joystick is
 wired to the ESP32.
 
 Usage:
-    python gameos_client.py                 # auto-detect ESP32 port
-    python gameos_client.py --port COM3     # Windows
-    python gameos_client.py --port /dev/ttyUSB0  # Linux/macOS
-    python gameos_client.py --baud 115200 --scale 4 --fps 30
+    python teeny_client.py                 # auto-detect ESP32 port
+    python teeny_client.py --port COM3     # Windows
+    python teeny_client.py --port /dev/ttyUSB0  # Linux/macOS
+    python teeny_client.py --baud 115200 --scale 4 --fps 30
 """
 
 import argparse
@@ -24,7 +24,7 @@ import serial
 import serial.tools.list_ports
 import pygame
 
-# Frame protocol (must match GameOS/Display.cpp SerialDisplay)
+# Frame protocol (must match Teeny/Display.cpp SerialDisplay)
 SYNC = b"\xAA\x55\xAA\x55"
 FRAME_LEN = 128 * 64 // 8  # 1024 bytes, page layout: byte[(y/8)*128 + x], bit (y%8)
 
@@ -64,7 +64,7 @@ def expand_frame(frame):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="GameOS PC client")
+    ap = argparse.ArgumentParser(description="Teeny PC client")
     ap.add_argument("--port", default=None, help="Serial port (auto-detected if omitted)")
     ap.add_argument("--baud", type=int, default=921600, help="Serial baud rate")
     ap.add_argument("--scale", type=int, default=4, help="Window scale factor")
@@ -77,7 +77,7 @@ def main():
         print("       Plug in the ESP32 and/or pass --port <device>")
         sys.exit(1)
 
-    print(f"[GameOS] Connecting to {port} @ {args.baud} ...")
+    print(f"[Teeny] Connecting to {port} @ {args.baud} ...")
     ser = serial.Serial(port, args.baud, timeout=0.02, write_timeout=0.02)
     time.sleep(2.0)  # let the ESP32 finish booting after the port open reset
     ser.reset_input_buffer()
@@ -87,14 +87,14 @@ def main():
     win_w = 128 * args.scale
     win_h = 64 * args.scale
     screen = pygame.display.set_mode((win_w, win_h))
-    pygame.display.set_caption("GameOS (running on ESP32)")
+    pygame.display.set_caption("Teeny (running on ESP32)")
     clock = pygame.time.Clock()
 
     buf = bytearray()
     running = True
     last_input = (0, 0, 0)  # x, y, btn last sent
 
-    print("[GameOS] Connected. Arrows = move, Space/Enter = button. Close window to quit.")
+    print("[Teeny] Connected. Arrows = move, Space/Enter = button. Close window to quit.")
 
     try:
         while running:
@@ -168,7 +168,7 @@ def main():
         except serial.SerialException:
             pass
         pygame.quit()
-        print("[GameOS] Disconnected.")
+        print("[Teeny] Disconnected.")
 
 
 if __name__ == "__main__":

@@ -2,10 +2,10 @@
 #define SNAKE_H
 
 #include <Arduino.h>
-#include "GameOS.h"
+#include "Teeny.h"
 
 // ---------------------------------------------------------------------------
-// Snake game for GameOS.
+// Snake game for Teeny.
 // Grid cells are 4x4 pixels -> 32 columns x 16 rows on a 128x64 screen.
 // ---------------------------------------------------------------------------
 class Snake : public Game {

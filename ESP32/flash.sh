@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# flash.sh -- compile and upload GameOS to the ESP32.
+# flash.sh -- compile and upload Teeny to the ESP32.
 #
 #   ./flash.sh                auto-detect ESP32 port and upload
 #   ./flash.sh /dev/ttyUSB0   use a specific serial port
@@ -20,7 +20,7 @@ fi
 
 PORT="${1:-}"
 
-echo "==> Building GameOS (ESP32)"
+echo "==> Building Teeny (ESP32)"
 platformio run
 
 if [[ -n "${PORT}" ]]; then

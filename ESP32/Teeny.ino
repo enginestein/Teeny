@@ -1,5 +1,5 @@
 /*
- * GameOS - A tiny gaming operating system for ESP32.
+ * Teeny - A tiny gaming operating system for ESP32.
  *
  * Hardware (simple circuit):
  *   ESP32  +  SSD1306 OLED (I2C)  +  2-axis joystick with push button
@@ -22,8 +22,8 @@
  *                      to the PC, keyboard controls it.
  *
  * Run the PC client:
- *   python client/gameos_client.py --port /dev/ttyUSB0   # Linux
- *   python client/gameos_client.py --port COM3           # Windows
+ *   python client/teeny_client.py --port /dev/ttyUSB0   # Linux
+ *   python client/teeny_client.py --port COM3           # Windows
  *
  * Flash with Arduino IDE (ESP32 board package) or PlatformIO.
  */
@@ -34,7 +34,7 @@
 #include "config.h"
 #include "Display.h"
 #include "Input.h"
-#include "GameOS.h"
+#include "Teeny.h"
 #include "Snake.h"
 #include "Breakout.h"
 
@@ -49,7 +49,7 @@ static bool oledDetected() {
 Display   *gOled   = nullptr;   // OLED output (optional)
 SerialDisplay *gSerial = nullptr; // PC output (always on)
 Input     *gInput  = nullptr;
-GameOS   *gOS      = nullptr;
+Teeny   *gOS      = nullptr;
 int8_t     gMode   = MODE_HARDWARE;
 
 void setup() {
@@ -74,10 +74,10 @@ void setup() {
 
     gInput->begin();
 
-    // GameOS renders to the OLED when present, otherwise straight to serial.
+    // Teeny renders to the OLED when present, otherwise straight to serial.
     Display *primary = gOled ? static_cast<Display *>(gOled)
                              : static_cast<Display *>(gSerial);
-    gOS = new GameOS(primary, gInput, gMode);
+    gOS = new Teeny(primary, gInput, gMode);
     gOS->addGame(new Snake());
     gOS->addGame(new Breakout());
     gOS->begin();
@@ -90,7 +90,7 @@ void loop() {
     lastFrame = now;
 
     gInput->update();   // read joystick (HW or serial from PC)
-    gOS->update();      // advance GameOS state machine
+    gOS->update();      // advance Teeny state machine
     gOS->draw();        // render to the primary display buffer
 
     // Push to OLED when wired.

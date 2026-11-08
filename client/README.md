@@ -1,4 +1,4 @@
-# GameOS PC Client
+# Teeny PC Client
 
 Renders the ESP32's streamed screen in a pygame window and relays your
 keyboard back to the board. Game logic runs on the ESP32; this is just the
@@ -14,10 +14,10 @@ pip install -r requirements.txt
 ## Usage
 
 ```
-python gameos_client.py                    # auto-detect port
-python gameos_client.py --port /dev/ttyUSB0   # Linux
-python gameos_client.py --port COM3                # Windows
-python gameos_client.py --port /dev/cu.usbmodem... # macOS
+python teeny_client.py                    # auto-detect port
+python teeny_client.py --port /dev/ttyUSB0   # Linux
+python teeny_client.py --port COM3                # Windows
+python teeny_client.py --port /dev/cu.usbmodem... # macOS
 ```
 
 ## Controls

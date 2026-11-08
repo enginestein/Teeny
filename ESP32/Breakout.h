@@ -2,10 +2,10 @@
 #define BREAKOUT_H
 
 #include <Arduino.h>
-#include "GameOS.h"
+#include "Teeny.h"
 
 // ---------------------------------------------------------------------------
-// Atari Breakout for GameOS.
+// Atari Breakout for Teeny.
 // Each level is procedurally generated: random brick layout, random brick
 // strength (1-3 hits), random rows.  Clear all bricks to advance to the
 // next generated level; lose all balls and it's game over.
