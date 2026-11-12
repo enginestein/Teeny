@@ -1,9 +1,6 @@
 #include "Teeny.h"
 #include "config.h"
 
-// ---------------------------------------------------------------------------
-// Teeny
-// ---------------------------------------------------------------------------
 Teeny::Teeny(Display *disp, Input *input, int8_t mode) {
     _disp = disp;
     _input = input;

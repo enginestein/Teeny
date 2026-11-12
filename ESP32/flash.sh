@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
-# flash.sh -- compile and upload Teeny to the ESP32.
-#
-#   ./flash.sh                auto-detect ESP32 port and upload
-#   ./flash.sh /dev/ttyUSB0   use a specific serial port
-#
-# Uses PlatformIO (platformio.ini in this directory).
-#
-# Prerequisites:
-#   pip install platformio
+# Build and upload Teeny over PlatformIO.
+#   ./flash.sh                auto-detect the port
+#   ./flash.sh /dev/ttyUSB0   use a specific port
 set -euo pipefail
 
 cd "$(dirname "$0")"

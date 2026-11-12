@@ -4,10 +4,7 @@
 #include <Arduino.h>
 #include "Teeny.h"
 
-// ---------------------------------------------------------------------------
-// Snake game for Teeny.
-// Grid cells are 4x4 pixels -> 32 columns x 16 rows on a 128x64 screen.
-// ---------------------------------------------------------------------------
+// Snake on a 32x16 grid of 4px cells.
 class Snake : public Game {
 public:
     Snake();

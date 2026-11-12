@@ -4,16 +4,11 @@
 #include <Arduino.h>
 #include "config.h"
 
-// ---------------------------------------------------------------------------
-// Input abstraction.
+// Normalised joystick input: x/y in -100..100, direction() is
+// 0=none, 1=up, 2=down, 3=left, 4=right.
 //
-// Normalised joystick values: x and y in -100..100, button boolean.
-// direction(): 0=none, 1=up, 2=down, 3=left, 4=right (cardinal only).
-//
-// - HWJoystick     : reads the analog potentiometers + push button.
-// - SerialJoystick : parses "JOY x y btn\n" lines from USB-serial
-//                    (sent by the PC client in remote mode).
-// ---------------------------------------------------------------------------
+// HWJoystick reads the analog axes; SerialJoystick parses "JOY x y btn"
+// lines from the PC client.
 class Input {
 public:
     Input();

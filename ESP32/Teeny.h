@@ -5,9 +5,7 @@
 #include "Display.h"
 #include "Input.h"
 
-// ---------------------------------------------------------------------------
-// Game interface.  Every Teeny game derives from this.
-// ---------------------------------------------------------------------------
+// Base class for a game.
 class Game {
 public:
     virtual ~Game() {}
@@ -20,9 +18,7 @@ public:
     virtual uint32_t frameId() { return 0; }  // increments when visuals change
 };
 
-// ---------------------------------------------------------------------------
-// Teeny core: boot screen -> menu -> game -> game-over state machine.
-// ---------------------------------------------------------------------------
+// Boot -> menu -> game -> game over.
 #define TEENY_MAX_GAMES 8
 
 #define STATE_BOOT     0

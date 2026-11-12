@@ -37,9 +37,7 @@ private:
     void setPixelRaw(uint8_t *buf, int16_t x, int16_t y, bool color);
 };
 
-// ---------------------------------------------------------------------------
-// Real SSD1306 OLED over I2C (no external libraries required).
-// ---------------------------------------------------------------------------
+// SSD1306 over I2C.
 class OLEDDisplay : public Display {
 public:
     OLEDDisplay();
@@ -51,9 +49,7 @@ private:
     void data(const uint8_t *d, size_t len);
 };
 
-// ---------------------------------------------------------------------------
-// Serial (remote) display: sends the framebuffer to a PC client.
-// ---------------------------------------------------------------------------
+// Streams the framebuffer to the PC client.
 class SerialDisplay : public Display {
 public:
     SerialDisplay();

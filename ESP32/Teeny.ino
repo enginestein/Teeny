@@ -1,31 +1,14 @@
 /*
- * Teeny - A tiny game console firmware for ESP32.
+ * Teeny - game console firmware for ESP32.
  *
- * Hardware (simple circuit):
- *   ESP32  +  SSD1306 OLED (I2C)  +  2-axis joystick with push button
+ * Wiring:
+ *   OLED        SDA=GPIO21, SCL=GPIO22, VCC=3.3V, GND=GND
+ *   Joystick    VRX=GPIO34, VRY=GPIO35, SW=GPIO32 (to GND)
  *
- * Connections:
- *   ESP32 GPIO21 (SDA)  -> OLED SDA
- *   ESP32 GPIO22 (SCL)  -> OLED SCL
- *   ESP32 3.3V          -> OLED VCC  / Joystick VCC
- *   ESP32 GND           -> OLED GND  / Joystick GND
- *   (optional) GPIO16   -> OLED RST
- *   ESP32 GPIO34        -> Joystick VRX (X axis)
- *   ESP32 GPIO35        -> Joystick VRY (Y axis)
- *   ESP32 GPIO32        -> Joystick SW  (button, other side to GND)
+ * With an OLED it runs standalone. Without one it streams the screen over
+ * USB serial for client/teeny_client.py.
  *
- * Modes:
- *   - OLED detected  : draws to the OLED AND streams the screen to the PC
- *                      over USB-serial (use the PC client). Controlled by the
- *                      hardware joystick.
- *   - No OLED        : remote mode. Game runs on the ESP32, screen streamed
- *                      to the PC, keyboard controls it.
- *
- * Run the PC client:
- *   python client/teeny_client.py --port /dev/ttyUSB0   # Linux
- *   python client/teeny_client.py --port COM3           # Windows
- *
- * Flash with Arduino IDE (ESP32 board package) or PlatformIO.
+ * Flash with PlatformIO or the Arduino IDE.
  */
 
 #include <Wire.h>

@@ -1,9 +1,6 @@
 #include "Breakout.h"
 #include "config.h"
 
-// ---------------------------------------------------------------------------
-// Breakout
-// ---------------------------------------------------------------------------
 Breakout::Breakout() {
     _rows = 0;
     _level = 0;
@@ -194,12 +191,10 @@ bool Breakout::_anyBricksLeft() {
 void Breakout::update(Input *input) {
     uint32_t now = millis();
 
-    // Paddle moves every frame (responsive).
     uint8_t dir = input->direction();
     if (dir == 3) _movePaddle(-1);   // left
     if (dir == 4) _movePaddle(1);    // right
 
-    // Button actions.
     if (input->pressed()) {
         if (_state == STATE_SERVE) {
             _launchBall();
@@ -215,7 +210,6 @@ void Breakout::update(Input *input) {
         }
     }
 
-    // Physics tick.
     if (_state == STATE_PLAYING && now - _lastTick >= _moveDelay) {
         _tick();
         _lastTick = now;
@@ -227,25 +221,19 @@ void Breakout::_drawBrick(Display *d, int8_t gx, int8_t gy) {
 }
 
 void Breakout::draw(Display *d) {
-    // Bricks.
     for (int r = 0; r < _rows; r++) {
         for (int c = 0; c < COLS; c++) {
             if (_brick[r][c] != 0) _drawBrick(d, c, r);
         }
     }
 
-    // Paddle.
     d->fillRect(_px, SCREEN_H - PADDLE_H - 2, PADDLE_W, PADDLE_H, true);
-
-    // Ball.
     d->fillRect(_bx, _by, BALL_SZ, BALL_SZ, true);
 
-    // HUD.
     char buf[32];
     snprintf(buf, sizeof(buf), "SC:%-5u LV:%u  B:%u", _score, _level, _lives);
     d->drawText(2, 2, buf, true);
 
-    // State overlays.
     if (_state == STATE_SERVE) {
         d->drawText(36, 26, "BREAKOUT", true);
         d->drawText(18, 42, "BTN=SERVE BALL", true);

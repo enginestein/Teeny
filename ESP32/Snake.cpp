@@ -1,9 +1,6 @@
 #include "Snake.h"
 #include "config.h"
 
-// ---------------------------------------------------------------------------
-// Snake
-// ---------------------------------------------------------------------------
 Snake::Snake() {
     _len = 0;
     _fx = _fy = 0;
@@ -119,14 +116,10 @@ void Snake::update(Input *input) {
 }
 
 void Snake::draw(Display *d) {
-    // Food
     _drawCell(d, _fx, _fy, true);
-    // Snake body
     for (uint8_t i = 0; i < _len; i++) {
-        bool head = (i == 0);
         _drawCell(d, _sx[i], _sy[i], true);
     }
-    // Score
     char buf[16];
     snprintf(buf, sizeof(buf), "SC:%u", _score);
     d->drawText(2, 2, buf, true);

@@ -4,9 +4,6 @@
 
 #include <Wire.h>
 
-// ---------------------------------------------------------------------------
-// Base Display
-// ---------------------------------------------------------------------------
 Display::Display() {
     _dirty = false;
     memset(_buffer, 0, sizeof(_buffer));
@@ -61,9 +58,6 @@ void Display::drawText(int16_t x, int16_t y, const char *s, bool color) {
     }
 }
 
-// ---------------------------------------------------------------------------
-// OLEDDisplay (SSD1306 over I2C)
-// ---------------------------------------------------------------------------
 OLEDDisplay::OLEDDisplay() {}
 
 void OLEDDisplay::cmd(uint8_t c) {
@@ -131,16 +125,11 @@ void OLEDDisplay::display() {
     _dirty = false;
 }
 
-// ---------------------------------------------------------------------------
-// SerialDisplay (remote mode)
-// ---------------------------------------------------------------------------
 SerialDisplay::SerialDisplay() {}
 
 void SerialDisplay::display() {
-    // Always stream the current frame so the PC client always has the
-    // latest screen, even when the ESP32 side is static (boot/menu).
-    // At 115200 baud, 1024 bytes x 30fps is well within link capacity.
-
+    // Send every frame, even when the screen hasn't changed, so the PC
+    // client can resync after a missed packet.
     const uint8_t sync[4] = {0xAA, 0x55, 0xAA, 0x55};
     Serial.write(sync, 4);
 

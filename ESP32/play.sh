@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
-# play.sh -- launch the Teeny PC viewer for the ESP32 version.
+# Open the PC viewer for the ESP32.
+#   ./play.sh                 auto-detect the port
+#   ./play.sh /dev/ttyUSB0    use a specific port
 #
-#   ./play.sh                 auto-detect ESP32 serial port and open viewer
-#   ./play.sh /dev/ttyUSB0    use a specific serial port
-#
-# The viewer is a pygame window that renders the ESP32's streamed framebuffer
-# and relays keyboard input back to the board. Game logic runs on the ESP32;
-# this client is only a display + input terminal.
-#
-# Prerequisites:
-#   pip install -r ../client/requirements.txt   (pyserial, pygame)
+# Needs pyserial and pygame: pip install -r ../client/requirements.txt
 set -euo pipefail
 
 cd "$(dirname "$0")"

@@ -1,9 +1,6 @@
 #include "Input.h"
 #include "config.h"
 
-// ---------------------------------------------------------------------------
-// Base Input
-// ---------------------------------------------------------------------------
 Input::Input() {
     _x = 0; _y = 0;
     _btn = false; _prevBtn = false; _pressed = false;
@@ -18,9 +15,6 @@ void Input::_computeDirection() {
     else if (_x > JOY_DEADZONE / 2)   _dir = 4; // right
 }
 
-// ---------------------------------------------------------------------------
-// HWJoystick
-// ---------------------------------------------------------------------------
 HWJoystick::HWJoystick() {}
 
 bool HWJoystick::begin() {
@@ -52,9 +46,6 @@ void HWJoystick::update() {
     _computeDirection();
 }
 
-// ---------------------------------------------------------------------------
-// SerialJoystick
-// ---------------------------------------------------------------------------
 SerialJoystick::SerialJoystick() {
     _lineLen = 0;
     _line[0] = 0;
