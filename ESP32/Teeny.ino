@@ -1,5 +1,5 @@
 /*
- * Teeny - A tiny gaming operating system for ESP32.
+ * Teeny - A tiny game console firmware for ESP32.
  *
  * Hardware (simple circuit):
  *   ESP32  +  SSD1306 OLED (I2C)  +  2-axis joystick with push button
@@ -37,6 +37,10 @@
 #include "Teeny.h"
 #include "Snake.h"
 #include "Breakout.h"
+#include "Echo.h"
+#include "Orbit.h"
+#include "Ember.h"
+#include "Mirror.h"
 
 // Detect whether a real SSD1306 OLED is present on I2C.
 static bool oledDetected() {
@@ -80,6 +84,10 @@ void setup() {
     gOS = new Teeny(primary, gInput, gMode);
     gOS->addGame(new Snake());
     gOS->addGame(new Breakout());
+    gOS->addGame(new Echo());
+    gOS->addGame(new Orbit());
+    gOS->addGame(new Ember());
+    gOS->addGame(new Mirror());
     gOS->begin();
 }
 

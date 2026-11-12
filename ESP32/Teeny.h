@@ -23,7 +23,7 @@ public:
 // ---------------------------------------------------------------------------
 // Teeny core: boot screen -> menu -> game -> game-over state machine.
 // ---------------------------------------------------------------------------
-#define TEENY_MAX_GAMES 4
+#define TEENY_MAX_GAMES 8
 
 #define STATE_BOOT     0
 #define STATE_MENU     1
@@ -46,6 +46,8 @@ private:
     uint8_t   _numGames;
     uint8_t   _state;
     uint8_t   _menuSel;
+    uint8_t   _menuTop;
+    uint8_t   _menuDir;
     Game     *_curGame;
     uint32_t  _bootTime;
     uint32_t  _lastSig;

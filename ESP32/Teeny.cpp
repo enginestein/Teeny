@@ -11,6 +11,8 @@ Teeny::Teeny(Display *disp, Input *input, int8_t mode) {
     _numGames = 0;
     _state = STATE_BOOT;
     _menuSel = 0;
+    _menuTop = 0;
+    _menuDir = 0;
     _curGame = nullptr;
     _bootTime = 0;
     _lastSig = 0;
@@ -45,14 +47,21 @@ void Teeny::update() {
             if (now - _bootTime > 1500UL) {
                 _state = STATE_MENU;
                 _menuSel = 0;
+                _menuTop = 0;
+                _menuDir = 0;
                 _lastSig = 0;   // force menu redraw
             }
             break;
 
         case STATE_MENU: {
             uint8_t dir = _input->direction();
-            if (dir == 1 && _menuSel > 0) { _menuSel--; _lastSig = 0; }
-            if (dir == 2 && _menuSel < _numGames - 1) { _menuSel++; _lastSig = 0; }
+            if (dir != _menuDir) {
+                if (dir == 1 && _menuSel > 0) { _menuSel--; _lastSig = 0; }
+                if (dir == 2 && _menuSel + 1 < _numGames) { _menuSel++; _lastSig = 0; }
+                _menuDir = dir;
+            }
+            if (_menuSel < _menuTop) _menuTop = _menuSel;
+            if (_menuSel >= _menuTop + 4) _menuTop = _menuSel - 3;
             if (_input->pressed() && _numGames > 0) {
                 _curGame = _games[_menuSel];
                 _curGame->begin();
@@ -74,6 +83,7 @@ void Teeny::update() {
             if (_input->pressed()) {
                 _curGame = nullptr;
                 _state = STATE_MENU;
+                _menuDir = 0;
                 _lastSig = 0;
             }
             break;
@@ -96,7 +106,7 @@ void Teeny::draw() {
 }
 
 void Teeny::drawBoot() {
-    _disp->drawText(43, 26, "GAME OS", true);
+    _disp->drawText(49, 26, "TEENY", true);
     _disp->drawText(38, 42, "BOOTING...", true);
     if (_mode == MODE_REMOTE) {
         _disp->drawText(22, 54, "REMOTE MODE (USB)", true);
@@ -106,11 +116,13 @@ void Teeny::drawBoot() {
 }
 
 void Teeny::drawMenu() {
-    _disp->drawText(43, 2, "GAME OS", true);
+    _disp->drawText(2, 1, "TEENY", true);
 
-    for (uint8_t i = 0; i < _numGames; i++) {
+    for (uint8_t row = 0; row < 4; row++) {
+        uint8_t i = _menuTop + row;
+        if (i >= _numGames) break;
         bool sel = (i == _menuSel);
-        int16_t y = 20 + i * 12;
+        int16_t y = 12 + row * 12;
         if (sel) {
             _disp->fillRect(2, y - 2, 124, 10, true);
             _disp->drawText(6, y, _games[i]->name(), false);
@@ -118,7 +130,8 @@ void Teeny::drawMenu() {
             _disp->drawText(6, y, _games[i]->name(), true);
         }
     }
-    _disp->drawText(2, 58, "JOY=SELECT  BTN=PLAY", true);
+    if (_menuTop > 0) _disp->drawText(120, 1, "^", true);
+    if (_menuTop + 4 < _numGames) _disp->drawText(120, 56, "v", true);
 }
 
 void Teeny::drawGameOver() {

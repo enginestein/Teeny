@@ -1,8 +1,9 @@
 # Teeny (ESP32)
 
-Tiny game console on an ESP32. Snake and Atari Breakout. Wire up an OLED and
-joystick and it runs on the board. Don't wire anything? It streams the screen
-to your PC over USB and your keyboard controls it.
+Tiny game console on an ESP32. Six games, all played with one joystick and
+one button. Wire up an OLED and joystick and it runs on the board. Don't wire
+anything? It streams the screen to your PC over USB and your keyboard
+controls it.
 
 ## Hardware
 
@@ -16,8 +17,8 @@ to your PC over USB and your keyboard controls it.
 | GPIO35    | –      | VRY (Y)  |
 | GPIO32    | –      | SW (button) |
 
-Wire each button between its GPIO and GND. The ESP32's internal pull-up does
-the rest.
+Wire the joystick button between GPIO32 and GND. The ESP32's internal pull-up
+does the rest.
 
 ## Build & flash
 
@@ -42,7 +43,15 @@ Controls: arrow keys move, Space/Enter is the button.
 
 ## Games
 
-- Snake
-- Atari Breakout (procedural levels)
+Move up/down in the menu and press the button to play.
+
+| Game | How to play |
+|------|-------------|
+| Snake | joystick steers |
+| Breakout | left/right moves the paddle, button serves |
+| Echo | dark maze; joystick moves, button sends a sonar ping |
+| Orbit | button reverses direction, up/down changes orbit |
+| Ember | joystick moves, button splashes water on the fire |
+| Mirror | joystick picks a mirror, button rotates it; hit the target with the beam |
 
 MIT — hack, remix, build more games on top of it.
