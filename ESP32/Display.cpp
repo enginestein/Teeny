@@ -44,7 +44,7 @@ void Display::drawChar(int16_t x, int16_t y, char c, bool color) {
     for (int16_t row = 0; row < 7; row++) {
         uint8_t bits = rows[row];
         for (int16_t col = 0; col < 5; col++) {
-            if (bits & (1 << col)) {
+            if (bits & (1 << (4 - col))) {
                 setPixelRaw(_buffer, x + col, y + row, color);
             }
         }

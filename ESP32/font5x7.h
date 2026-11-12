@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 // Tiny 5x7 bitmap font used by the display driver.
-// Each glyph is 7 rows; bit0 of a row = leftmost column.
+// Each glyph is 7 rows; bit4 of a row = leftmost column.
 struct FontGlyph {
     char c;
     uint8_t rows[7];
